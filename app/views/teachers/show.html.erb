@@ -10,5 +10,45 @@
   <%= @teacher.name %>
 </p>
 
-<%= link_to 'Edit', edit_teacher_path(@teacher) %> |
-<%= link_to 'Back', teachers_path %>
+<p>
+  <strong>Lesson:</strong>
+  <%= form_for @teacher, method: :put do |f| %>
+    <table>
+      <tr>
+        <td>
+          timeslots
+        </td>
+        <% @weekdays.each do |weekday| %>
+        <td>
+          <%= weekday %>
+        </td>
+        <% end %>
+      </tr>
+
+      <% @time_slots.each do |time| %>
+        <tr>
+          <td>
+            <%= time %>
+          </td>
+
+          <% @weekdays.each do |weekday| %>
+            <td>
+              <%
+                key = "#{weekday}_#{time}"
+                if @available_lessons && @available_lessons.include?(key)
+              %>
+                  <%= check_box :selected_lessons, "[#{weekday}_#{time}]", checked: true %></td>
+              <% else %>
+                  <%= check_box :selected_lessons, "[#{weekday}_#{time}]" %></td>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+
+    </table>
+
+    <%= submit_tag 'Submit' %>
+
+  <% end %><!-- /form_for -->
+</p>

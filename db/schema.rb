@@ -11,15 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150920003709) do
+ActiveRecord::Schema.define(version: 20150920005444) do
 
   create_table "lesson_schedules", force: :cascade do |t|
-    t.datetime "lesson_start_datetime", null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "start_time", limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  add_index "lesson_schedules", ["lesson_start_datetime"], name: "index_lesson_schedules_on_lesson_start_datetime", unique: true, using: :btree
+  add_index "lesson_schedules", ["start_time"], name: "index_lesson_schedules_on_start_time", unique: true, using: :btree
+
+  create_table "lessons", force: :cascade do |t|
+    t.integer  "teacher_id",         limit: 4,                 null: false
+    t.integer  "lesson_schedule_id", limit: 4,                 null: false
+    t.integer  "student_id",         limit: 4
+    t.boolean  "availability",                 default: false, null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "lessons", ["teacher_id", "lesson_schedule_id"], name: "index_lessons_on_teacher_id_and_lesson_schedule_id", unique: true, using: :btree
 
   create_table "students", force: :cascade do |t|
     t.string   "email",      limit: 255, null: false
