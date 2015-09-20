@@ -4,7 +4,7 @@ ruby '2.2.2'
 gem 'rails', '4.2.3'
 
 # database
-gem 'mysql2',                             '0.3.19'
+gem 'pg',                                 '0.18.3'
 gem 'activerecord-import',                '0.10.0'
 gem 'squeel',                             '1.2.3'
 # js, html and css
